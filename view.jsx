@@ -1,47 +1,55 @@
-var Greeting = function Greeting(props) {
+var Todo = function Todo(props) {
 		return (
-			<div>
-				<label htmlFor="name">Change name to:</label>
-				<input id="name" type="text" onChange={ props.changeName } defaultValue={ props.name } />
-				<h1 className='greeting'>
-					<span>Hello, { props.name }!</span>
-				</h1>
-				<button onClick={ props.cycleNames }>Change to Next Name</button>
-			</div>
+			<li key={props.key}>{props.todo}</li>
 		);
 	},
-	App = React.createClass({
+	TodoList = function TodoList(props) {
+		return (
+			<ul>
+				{ props.todos.map(function (todo, idx) { return <Todo todo={todo} key={'todo-' + idx } />; }) }
+			</ul>
+		);
+	},
+	TodoForm = function TodoForm(props) {
+		return (
+			<form onSubmit={ props.addTodo }>
+				<label htmlFor="name">Change name to:</label>
+				<input id="name" type="text" />
+				<input type="submit" defaultValue="Add Todo" />
+			</form>
+		);
+	},
+	TodoComponent = React.createClass({
 		getInitialState: function () {
 			return {
-				currentName: 'Ben',
-				names: ['Kevin', 'Satish', 'Justin', 'Ben'],
-				index: 0
+				todos: []
 			}
 		},
-		cycleNames: function () {
-			var names = this.state.names,
-				index = this.state.index;
-
-			// loop back through the list if we are at the end
-			index = index < names.length ? index : 0;
-
-			// update the state with the new name
-			// increment the index to the next value
+		addTodo: function (event) {
+			var nameInput = event.currentTarget.name;
+			
+			event.preventDefault();
+			
 			this.setState({
-				currentName: names[index],
-				index: index + 1
+				todos: this.state.todos.concat([nameInput.value])
 			});
-
-		},
-		changeName: function changeName(event) {
-			this.setState({ currentName: event.target.value });
+			
+			nameInput.value = '';
 		},
 		render: function render() {
 			return (
-				<Greeting cycleNames={ this.cycleNames } changeName={ this.changeName } name={ this.state.currentName } />
+				<div>
+					<TodoForm inputValue={ this.state.inputValue } addTodo={ this.addTodo } />
+					<TodoList todos={ this.state.todos } />
+				</div>
 			);
 		}
-	});
+	}),
+	App = function App() {
+		return (
+			<TodoComponent />
+		);
+	};
 
 
 ReactDOM.render(
