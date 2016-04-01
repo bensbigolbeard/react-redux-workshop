@@ -1,11 +1,12 @@
 var Greeting = function Greeting(props) {
 		return (
 			<div>
+				<label htmlFor="name">Change name to:</label>
+				<input id="name" type="text" onChange={ props.changeName } defaultValue={ props.name } />
 				<h1 className='greeting'>
 					<span>Hello, { props.name }!</span>
 				</h1>
 				<button onClick={ props.cycleNames }>Change to Next Name</button>
-				<button onClick={ props.changeName }>Change to Justin</button>
 			</div>
 		);
 	},
@@ -32,8 +33,8 @@ var Greeting = function Greeting(props) {
 			});
 
 		},
-		changeName: function changeName() {
-			this.setState({ currentName: 'Justin' });
+		changeName: function changeName(event) {
+			this.setState({ currentName: event.target.value });
 		},
 		render: function render() {
 			return (
