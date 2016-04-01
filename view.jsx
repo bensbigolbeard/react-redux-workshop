@@ -4,6 +4,7 @@ var Greeting = function Greeting(props) {
 				<h1 className='greeting'>
 					<span>Hello, { props.name }!</span>
 				</h1>
+				<button onClick={ props.cycleNames }>Change to Next Name</button>
 				<button onClick={ props.changeName }>Change to Justin</button>
 			</div>
 		);
@@ -11,33 +12,32 @@ var Greeting = function Greeting(props) {
 	App = React.createClass({
 		getInitialState: function () {
 			return {
-				name: 'Ben'
+				currentName: 'Ben',
+				names: ['Kevin', 'Satish', 'Justin', 'Ben'],
+				index: 0
 			}
 		},
 		cycleNames: function () {
-			var self = this,
-				names = ['Kevin', 'Satish', 'Justin', 'Ben'],
-				index = 0;
-			setInterval(function () {
-				// loop back through the list if we are at the end
-				index = index < names.length ? index : 0;
+			var names = this.state.names,
+				index = this.state.index;
 
-				// update the state with the new name
-				self.setState({ name: names[index] });
+			// loop back through the list if we are at the end
+			index = index < names.length ? index : 0;
 
-				// increment the index to the next value
-				index++;
-			}, 1000);
+			// update the state with the new name
+			// increment the index to the next value
+			this.setState({
+				currentName: names[index],
+				index: index + 1
+			});
+
 		},
 		changeName: function changeName() {
-			this.setState({ name: 'Justin' });
-		},
-		componentDidMount: function () {
-			// this.cycleNames();
+			this.setState({ currentName: 'Justin' });
 		},
 		render: function render() {
 			return (
-				<Greeting changeName={ this.changeName } name={ this.state.name } />
+				<Greeting cycleNames={ this.cycleNames } changeName={ this.changeName } name={ this.state.currentName } />
 			);
 		}
 	});
