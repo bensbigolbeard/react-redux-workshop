@@ -5,8 +5,26 @@
 <body>
 	<div id="root"></div>
 </body>
-	<script src="https://fb.me/react-0.14.8.js"></script>
-	<script src="https://fb.me/react-dom-0.14.8.js"></script>
+	<script src="https://fb.me/react-15.0.0.js"></script>
+	<script src="https://fb.me/react-dom-15.0.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.3.1/redux.js"></script>
 	<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+	<script type="text/javascript" src="store.js"></script>
 	<script type="text/jsx" src="view.jsx"></script>
+	<style>
+		body {
+			margin: 2em;
+		}
+		input[type="text"] {
+			display: block;
+			margin-bottom: 1em;
+		}
+		input[type="checkbox"] {
+			margin-right: 1em;
+		}
+		.completed {
+			text-decoration: line-through;
+			color: lightgray;
+		}
+	</style>
 </html>
